@@ -1,9 +1,9 @@
-import { Carte } from '../components/Carte/Carte';
+import { DesCarte } from '../components/DesCarte/DesCarte';
 
 export default function HomePage() {
   return (
     <>
-      <Carte />
+      <DesCarte />
     </>
   );
 }

@@ -1,11 +1,11 @@
 'use client';
 import { Grid, Container, Text, Card, Group, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import classes from './Carte.module.css';
+import classes from './DesCarte.module.css';
 import { CarteType } from '@/types/carteType';
 import { generateCarteData } from '@/Data/CardData';
 
-export function Carte() {
+export function DesCarte() {
   const [score, setScore] = useState<number>(0);
   const [tentative, setTentative] = useState<number>(0);
 
@@ -13,7 +13,6 @@ export function Carte() {
   const [cardTwo, setcardTwo] = useState<string[]>([]);
 
   const [carteData, setCarteData] = useState<CarteType[]>([]);
- 
 
   useEffect(() => {
     if (cardOne.length == 1 && cardTwo.length == 1) {
@@ -24,8 +23,7 @@ export function Carte() {
       }
       setcardOne([]);
       setcardTwo([]);
-    } 
-
+    }
   }, [cardOne, cardTwo]);
 
   useEffect(() => {
