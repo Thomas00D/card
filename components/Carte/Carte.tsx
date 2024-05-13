@@ -1,48 +1,54 @@
 'use client';
-
-import { Grid, Container, Button, Text, Card } from '@mantine/core';
+import { Grid, Container, Text, Card, Group, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import classes from './Carte.module.css';
 import { CarteType } from '@/types/carteType';
 import { generateCarteData } from '@/Data/CardData';
 
 export function Carte() {
-  const [paireOne, setpaireOne] = useState<string[]>([]);
-  const [paireTwo, setpaireTwo] = useState<string[]>([]);
   const [score, setScore] = useState<number>(0);
+  const [tentative, setTentative] = useState<number>(0);
+
+  const [cardOne, setcardOne] = useState<string[]>([]);
+  const [cardTwo, setcardTwo] = useState<string[]>([]);
+
   const [carteData, setCarteData] = useState<CarteType[]>([]);
+ 
 
   useEffect(() => {
-    if (paireOne.length === 1 && paireTwo.length === 1) {
-      if (paireOne[0] === paireTwo[0]) {
+    if (cardOne.length == 1 && cardTwo.length == 1) {
+      if (cardOne[0] == cardTwo[0]) {
         setScore(score + 1);
+      } else {
+        setTentative(tentative + 1);
       }
-      setpaireOne([]);
-      setpaireTwo([]);
-    }
-  }, [paireOne, paireTwo]);
+      setcardOne([]);
+      setcardTwo([]);
+    } 
+
+  }, [cardOne, cardTwo]);
 
   useEffect(() => {
     setCarteData(generateCarteData().sort(() => Math.random() - 0.5));
   }, []);
 
   const onClickCard = (img: string) => {
-    if (paireOne.length === 0) {
-      setpaireOne([...paireOne, img]);
-    } else {
-      setpaireTwo([...paireTwo, img]);
+    if (cardOne.length === 0) {
+      setcardOne([...cardOne, img]);
+    } else if (cardTwo.length === 0) {
+      setcardTwo([...cardTwo, img]);
     }
   };
-
   return (
     <>
-      <div className={classes.score}>
+      <Stack className={classes.score}>
         <Text className={classes.textScore}>Score: {score}</Text>
-      </div>
+        <Text className={classes.textScore}>Tentative: {tentative}</Text>
+      </Stack>
       <Container>
         <Grid>
-          {carteData.map((carte: CarteType) => (
-            <Grid.Col span={{ base: 12, xs: 2 }}>
+          {carteData.map((carte, index) => (
+            <Grid.Col span={{ base: 12, xs: 2 }} key={index}>
               <Card className={classes.jeux} onClick={() => onClickCard(carte.img)}>
                 <img src={carte.img} alt="carte" />
               </Card>
